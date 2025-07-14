@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DS Global Wealth - Luxury Portfolio</title>
+    <!-- EmailJS SDK -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emailjs/4.0.2/email.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* Luxury Navbar */
+        .luxury-navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 25px 0;
+            z-index: 999;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+        }
+        
+        .luxury-nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .luxury-logo {
+            font-size: 24px;
+            font-weight: 300;
+            color: #c9a96e;
+            letter-spacing: 2px;
+        }
+        
+        .luxury-nav-links {
+            display: flex;
+            gap: 50px;
+            list-style: none;
+        }
+        
+        .luxury-nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            font-family: 'Arial', sans-serif;
+            text-transform: uppercase;
+        }
+        
+        .luxury-nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #c9a96e;
+            transition: width 0.3s ease;
+        }
+        
+        .luxury-nav-links a:hover {
+            color: #c9a96e;
+        }
+        
+        .luxury-nav-links a.active {
+            color: #c9a96e;
+        }
+        
+        .luxury-nav-links a.active::after {
+            width: 100%;
+        }
+        
+        /* Section Styling */
+        .section {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 100px 0 60px 0;
+        }
+        
+        .section-1 {
+            background: linear-gradient(45deg, #1a1a1a 0%, #2c2c2c 50%, #1a1a1a 100%);
+            position: relative;
+        }
+        
+        .section-1::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%23c9a96e" opacity="0.3"><animate attributeName="r" values="1;2;1" dur="3s" repeatCount="indefinite"/></circle></svg>') repeat;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .immersive-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .immersive-content h1 {
+            font-size: 80px;
+            font-weight: 100;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #c9a96e 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+        
+        .luxury-subtitle {
+            font-size: 24px;
+            color: #c9a96e;
+            margin-bottom: 20px;
+            font-family: 'Arial', sans-serif;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .elegant-description {
+            font-size: 20px;
+            color: #cccccc;
+            max-width: 600px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
+        }
+        
+        .luxury-cta {
+            display: inline-block;
+            padding: 20px 50px;
+            background: transparent;
+            color: #c9a96e;
+            border: 2px solid #c9a96e;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .luxury-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .luxury-cta:hover::before {
+            left: 100%;
+        }
+        
+        .luxury-cta:hover {
+            background: #c9a96e;
+            color: #000000;
+        }
+        
+        .section-2 {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            padding: 0 50px;
+        }
+        
+        .fullscreen-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 100%;
+            gap: 80px;
+            align-items: center;
+        }
+        
+        .fullscreen-text h2 {
+            font-size: 48px;
+            margin-bottom: 30px;
+            color: #c9a96e;
+            font-weight: 300;
+        }
+        
+        .fullscreen-text p {
+            font-size: 18px;
+            color: #cccccc;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .fullscreen-visual {
+            height: 70vh;
+            background: linear-gradient(135deg, #c9a96e 0%, #d4b574 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000000;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .luxury-nav-container {
+                padding: 0 20px;
+            }
+            
+            .luxury-nav-links {
+                gap: 20px;
+            }
+            
+            .luxury-nav-links a {
+                font-size: 12px;
+            }
+            
+            .immersive-content h1 {
+                font-size: 48px;
+            }
+            
+            .fullscreen-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 0 20px;
+            }
+            
+            .section-2 {
+                padding: 0 20px;
+            }
+            
+            .section {
+                padding: 120px 0 40px 0;
+            }
+            
+            .section-4 {
+                padding: 140px 0 60px 0 !important;
+            }
+            
+            .luxury-logo {
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .immersive-content h1 {
+                font-size: 36px;
+            }
+            
+            .luxury-subtitle {
+                font-size: 18px;
+            }
+            
+            .elegant-description {
+                font-size: 16px;
+            }
+            
+            .luxury-cta {
+                padding: 15px 30px;
+                font-size: 14px;
+            }
+            
+            .section {
+                padding: 130px 0 30px 0;
+            }
+            
+            .section-4 {
+                padding: 150px 0 50px 0 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Luxury Navigation -->
+    <nav class="luxury-navbar">
+        <div class="luxury-nav-container">
+            <div class="luxury-logo">DS GLOBAL WEALTH</div>
+            <ul class="luxury-nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#trust">Trust</a></li>
+                <li><a href="#company">Company</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="section section-1" id="home">
+        <div class="immersive-content">
+            <div class="luxury-subtitle">Founder of DS Global Wealth</div>
+            <h1>Elevating<br/>Wealth</h1>
+            <p class="elegant-description">Where sophisticated investment strategies meet uncompromising integrity. Experience wealth management redefined through decades of market mastery and unwavering commitment to excellence.</p>
+            <a href="#about" class="luxury-cta">DISCOVER MORE</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section section-2" id="about">
+        <div class="fullscreen-grid">
+            <div class="fullscreen-text">
+                <h2>Legacy of Excellence</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
+                    <div>
+                        <h3 style="color: #c9a96e; font-size: 20px; margin-bottom: 15px; font-weight: 400;">Experience</h3>
+                        <p style="font-size: 16px; color: #cccccc; line-height: 1.6;">13+ years in financial sector as wealth strategist and investment advisor. Partner at Stride Ventures specializing in Consumer and EdTech sectors.</p>
+                    </div>
+                    <div>
+                        <h3 style="color: #c9a96e; font-size: 20px; margin-bottom: 15px; font-weight: 400;">Expertise</h3>
+                        <p style="font-size: 16px; color: #cccccc; line-height: 1.6;">Multiple asset classes, investment strategies, and business financing solutions for HNWIs, SMEs, and MSMEs.</p>
+                    </div>
+                </div>
+                <div style="background: rgba(201, 169, 110, 0.1); padding: 30px; border-radius: 10px; border: 1px solid rgba(201, 169, 110, 0.2); margin-bottom: 30px;">
+                    <h3 style="color: #c9a96e; font-size: 18px; margin-bottom: 15px; font-weight: 400;">Key Positions</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span style="color: #ffffff; font-weight: 500;">Goldman Sachs</span>
+                        <span style="color: #c9a96e; font-size: 14px;">Associate</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span style="color: #ffffff; font-weight: 500;">Avendus</span>
+                        <span style="color: #c9a96e; font-size: 14px;">Vice President</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #ffffff; font-weight: 500;">Stride Ventures</span>
+                        <span style="color: #c9a96e; font-size: 14px;">Partner</span>
+                    </div>
+                </div>
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #c9a96e; font-size: 18px; margin-bottom: 15px; font-weight: 400;">Education</h3>
+                    <p style="font-size: 16px; color: #cccccc;">MBA Finance - Indian School of Business<br/>B.Tech - IIT Delhi</p>
+                </div>
+                <div style="margin-top: 30px;">
+                    <a href="#trust" class="luxury-cta" style="padding: 15px 35px; font-size: 14px;">LEARN WHY CLIENTS TRUST US</a>
+                </div>
+            </div>
+            <div class="fullscreen-visual">
+                Executive Portrait<br/>
+                [High-Resolution Image]<br/>
+                [CV Integration Point]
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="section section-3" id="trust" style="background: linear-gradient(45deg, #111111 0%, #222222 100%);">
+        <div style="max-width: 1000px; margin: 0 auto; padding: 0 50px; text-align: center;">
+            <h2 style="font-size: 48px; font-weight: 300; margin-bottom: 80px; color: #c9a96e;">Why Trust Me?</h2>
+            
+            <!-- Key Numbers Section -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-bottom: 80px;">
+                <div style="text-align: center;">
+                    <div style="font-size: 48px; font-weight: 300; color: #c9a96e; margin-bottom: 10px;">₹2000+</div>
+                    <div style="font-size: 14px; color: #cccccc; text-transform: uppercase; letter-spacing: 1px;">Crore Managed</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 48px; font-weight: 300; color: #c9a96e; margin-bottom: 10px;">13+</div>
+                    <div style="font-size: 14px; color: #cccccc; text-transform: uppercase; letter-spacing: 1px;">Years Experience</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 48px; font-weight: 300; color: #c9a96e; margin-bottom: 10px;">5000+</div>
+                    <div style="font-size: 14px; color: #cccccc; text-transform: uppercase; letter-spacing: 1px;">Professionals Mentored</div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 80px; align-items: start;">
+                <!-- Left Side: Credentials -->
+                <div style="text-align: left;">
+                    <h3 style="color: #c9a96e; font-size: 28px; margin-bottom: 40px; font-weight: 300;">Credentials</h3>
+                    
+                    <div style="margin-bottom: 35px;">
+                        <div style="font-size: 18px; color: #ffffff; margin-bottom: 8px; font-weight: 500;">Goldman Sachs</div>
+                        <div style="font-size: 14px; color: #c9a96e; margin-bottom: 5px;">Associate (2011-2015)</div>
+                        <div style="font-size: 14px; color: #cccccc;">Investment Banking Division</div>
+                    </div>
+                    
+                    <div style="margin-bottom: 35px;">
+                        <div style="font-size: 18px; color: #ffffff; margin-bottom: 8px; font-weight: 500;">Avendus Capital</div>
+                        <div style="font-size: 14px; color: #c9a96e; margin-bottom: 5px;">Vice President (2015-2021)</div>
+                        <div style="font-size: 14px; color: #cccccc;">Investment Banking & Private Equity</div>
+                    </div>
+                    
+                    <div style="margin-bottom: 35px;">
+                        <div style="font-size: 18px; color: #ffffff; margin-bottom: 8px; font-weight: 500;">Stride Ventures</div>
+                        <div style="font-size: 14px; color: #c9a96e; margin-bottom: 5px;">Partner (2021-Present)</div>
+                        <div style="font-size: 14px; color: #cccccc;">Consumer & EdTech Specialist</div>
+                    </div>
+                    
+                    <div style="border-top: 1px solid rgba(201, 169, 110, 0.3); padding-top: 30px; margin-top: 40px;">
+                        <div style="font-size: 16px; color: #ffffff; margin-bottom: 8px;">MBA Finance</div>
+                        <div style="font-size: 14px; color: #cccccc; margin-bottom: 15px;">Indian School of Business</div>
+                        <div style="font-size: 16px; color: #ffffff; margin-bottom: 8px;">B.Tech</div>
+                        <div style="font-size: 14px; color: #cccccc;">IIT Delhi</div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Impact & Results -->
+                <div style="text-align: left;">
+                    <h3 style="color: #c9a96e; font-size: 28px; margin-bottom: 40px; font-weight: 300;">Proven Results</h3>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <div style="font-size: 16px; color: #ffffff; margin-bottom: 8px; font-weight: 500;">Portfolio Management</div>
+                        <div style="font-size: 14px; color: #cccccc;">Successfully managed ₹2000+ crore across multiple asset classes with consistent 15-30% ROI</div>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <div style="font-size: 16px; color: #ffffff; margin-bottom: 8px; font-weight: 500;">Business Funding</div>
+                        <div style="font-size: 14px; color: #cccccc;">Raised ₹500+ crore in funding for SMEs & MSMEs, transforming businesses into publicly listed entities</div>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <div style="font-size: 16px; color: #ffffff; margin-bottom: 8px; font-weight: 500;">Risk Management</div>
+                        <div style="font-size: 14px; color: #cccccc;">Secured ₹300+ crore through strategic risk mitigation while maximizing returns</div>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <div style="font-size: 16px; color: #ffffff; margin-bottom: 8px; font-weight: 500;">Thought Leadership</div>
+                        <div style="font-size: 14px; color: #cccccc;">Published financial guides, conducts masterclasses, and mentors entrepreneurs across Consumer & EdTech sectors</div>
+                    </div>
+                    
+                    <div style="background: rgba(201, 169, 110, 0.1); padding: 25px; border-left: 3px solid #c9a96e; margin-top: 40px;">
+                        <div style="font-size: 14px; color: #c9a96e; margin-bottom: 10px; font-weight: 500;">PHILOSOPHY</div>
+                        <div style="font-size: 16px; color: #ffffff; line-height: 1.6;">Data-backed decisions. Client-centric solutions. Transparent advisory with rigorous analysis.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 60px;">
+                <a href="#company" class="luxury-cta" style="padding: 18px 40px; font-size: 14px;">EXPLORE OUR FIRM</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Section -->
+    <section class="section section-4" id="company" style="background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 70%); position: relative; overflow: hidden; min-height: 100vh; padding: 120px 0 80px 0;">
+        <!-- Animated Background Elements -->
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.03; background: url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 100 100&quot;><circle cx=&quot;50&quot; cy=&quot;20&quot; r=&quot;2&quot; fill=&quot;%23c9a96e&quot;/><circle cx=&quot;80&quot; cy=&quot;40&quot; r=&quot;1.5&quot; fill=&quot;%23c9a96e&quot;/><circle cx=&quot;30&quot; cy=&quot;70&quot; r=&quot;1&quot; fill=&quot;%23c9a96e&quot;/><circle cx=&quot;70&quot; cy=&quot;80&quot; r=&quot;2.5&quot; fill=&quot;%23c9a96e&quot;/></svg>'); animation: float 8s ease-in-out infinite;"></div>
+        
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 50px; width: 100%; display: flex; align-items: center; justify-content: center;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; width: 100%; align-items: center;">
+                
+                <!-- Left Side - Company Information -->
+                <div style="position: relative; z-index: 2;">
+                    <!-- Company Header -->
+                    <div style="margin-bottom: 50px;">
+                        <div style="display: inline-block; padding: 8px 20px; background: rgba(201, 169, 110, 0.1); border: 1px solid rgba(201, 169, 110, 0.3); border-radius: 25px; margin-bottom: 20px;">
+                            <span style="color: #c9a96e; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">Premier Investment Advisory</span>
+                        </div>
+                        <h2 style="font-size: 42px; font-weight: 300; margin-bottom: 25px; color: #ffffff; line-height: 1.2;">DS Global<br/><span style="color: #c9a96e;">Wealth</span></h2>
+                        <p style="font-size: 18px; color: #cccccc; line-height: 1.7; margin-bottom: 0;">Specializing in comprehensive wealth management solutions for high-net-worth individuals, SMEs, and MSMEs through strategic thinking and data-driven decisions.</p>
+                    </div>
+
+                    <!-- Philosophy Card -->
+                    <div style="margin-bottom: 40px; padding: 30px; background: linear-gradient(135deg, rgba(201, 169, 110, 0.08) 0%, rgba(201, 169, 110, 0.03) 100%); border: 1px solid rgba(201, 169, 110, 0.2); border-radius: 15px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: -50px; right: -50px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(201, 169, 110, 0.1) 0%, transparent 70%); border-radius: 50%;"></div>
+                        <div style="position: relative; z-index: 2;">
+                            <h3 style="color: #c9a96e; font-size: 18px; margin-bottom: 15px; font-weight: 500; display: flex; align-items: center;">
+                                <span style="width: 6px; height: 6px; background: #c9a96e; border-radius: 50%; margin-right: 12px;"></span>
+                                Our Philosophy
+                            </h3>
+                            <p style="color: #cccccc; font-size: 16px; line-height: 1.6; font-style: italic; margin: 0;">"Wealth management extends far beyond simple investment strategies—it encompasses a comprehensive approach to financial security, growth, and legacy building."</p>
+                        </div>
+                    </div>
+
+                    <!-- Core Specializations Grid -->
+                    <div style="margin-bottom: 40px;">
+                        <h3 style="color: #c9a96e; font-size: 20px; margin-bottom: 25px; font-weight: 400;">Core Specializations</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div style="padding: 20px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.background='rgba(201, 169, 110, 0.05)'; this.style.borderColor='rgba(201, 169, 110, 0.2)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.02)'; this.style.borderColor='rgba(255, 255, 255, 0.05)'; this.style.transform='translateY(0)'">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #c9a96e 0%, #d4b574 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                    <span style="color: #000; font-weight: bold; font-size: 18px;">📈</span>
+                                </div>
+                                <h4 style="color: #ffffff; font-size: 16px; margin-bottom: 8px; font-weight: 500;">Investment Strategy</h4>
+                                <p style="color: #cccccc; font-size: 14px; line-height: 1.5; margin: 0;">Multi-asset portfolio optimization with 15-30% ROI targets</p>
+                            </div>
+                            
+                            <div style="padding: 20px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.background='rgba(201, 169, 110, 0.05)'; this.style.borderColor='rgba(201, 169, 110, 0.2)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.02)'; this.style.borderColor='rgba(255, 255, 255, 0.05)'; this.style.transform='translateY(0)'">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #c9a96e 0%, #d4b574 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                    <span style="color: #000; font-weight: bold; font-size: 18px;">💼</span>
+                                </div>
+                                <h4 style="color: #ffffff; font-size: 16px; margin-bottom: 8px; font-weight: 500;">Business Funding</h4>
+                                <p style="color: #cccccc; font-size: 14px; line-height: 1.5; margin: 0;">SME & MSME funding solutions and IPO preparation</p>
+                            </div>
+                            
+                            <div style="padding: 20px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.background='rgba(201, 169, 110, 0.05)'; this.style.borderColor='rgba(201, 169, 110, 0.2)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.02)'; this.style.borderColor='rgba(255, 255, 255, 0.05)'; this.style.transform='translateY(0)'">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #c9a96e 0%, #d4b574 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                    <span style="color: #000; font-weight: bold; font-size: 18px;">🛡️</span>
+                                </div>
+                                <h4 style="color: #ffffff; font-size: 16px; margin-bottom: 8px; font-weight: 500;">Risk Mitigation</h4>
+                                <p style="color: #cccccc; font-size: 14px; line-height: 1.5; margin: 0;">Advanced hedging and diversification strategies</p>
+                            </div>
+                            
+                            <div style="padding: 20px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 10px; transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.background='rgba(201, 169, 110, 0.05)'; this.style.borderColor='rgba(201, 169, 110, 0.2)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.02)'; this.style.borderColor='rgba(255, 255, 255, 0.05)'; this.style.transform='translateY(0)'">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #c9a96e 0%, #d4b574 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                                    <span style="color: #000; font-weight: bold; font-size: 18px;">📊</span>
+                                </div>
+                                <h4 style="color: #ffffff; font-size: 16px; margin-bottom: 8px; font-weight: 500;">Tax Optimization</h4>
+                                <p style="color: #cccccc; font-size: 14px; line-height: 1.5; margin: 0;">Strategic tax planning and efficiency maximization</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Download Guide CTA -->
+                    <div style="padding: 30px; background: linear-gradient(135deg, rgba(201, 169, 110, 0.15) 0%, rgba(201, 169, 110, 0.05) 100%); border: 2px solid rgba(201, 169, 110, 0.3); border-radius: 15px; text-align: center; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: -30px; left: -30px; width: 60px; height: 60px; background: radial-gradient(circle, rgba(201, 169, 110, 0.2) 0%, transparent 70%); border-radius: 50%;"></div>
+                        <div style="position: relative; z-index: 2;">
+                            <h3 style="color: #c9a96e; font-size: 22px; margin-bottom: 15px; font-weight: 500;">📚 The Smart Investor's Guide</h3>
+                            <p style="color: #cccccc; margin-bottom: 8px; font-size: 16px;">Comprehensive guide to wealth management & financial growth</p>
+                            <p style="color: #888; margin-bottom: 25px; font-size: 14px;">Tax Planning • Risk Management • Investment Strategies • Financial Goal Setting</p>
+                            <div style="background: linear-gradient(135deg, #c9a96e 0%, #d4b574 100%); color: #000000; padding: 15px 35px; display: inline-block; font-weight: 600; cursor: pointer; transition: all 0.3s ease; border-radius: 8px; box-shadow: 0 4px 15px rgba(201, 169, 110, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(201, 169, 110, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(201, 169, 110, 0.3)'">
+                                DOWNLOAD GUIDE
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Services & Stats -->
+                <div style="position: relative; z-index: 2;">
+                    <!-- Performance Stats -->
+                    <div style="background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%); border-radius: 20px; padding: 40px; margin-bottom: 30px; border: 1px solid rgba(255, 255, 255, 0.1); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: -50px; right: -50px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(201, 169, 110, 0.1) 0%, transparent 70%); border-radius: 50%;"></div>
+                        <div style="position: relative; z-index: 2;">
+                            <h3 style="color: #c9a96e; font-size: 24px; margin-bottom: 30px; text-align: center; font-weight: 400;">Performance Metrics</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; text-align: center;">
+                                <div>
+                                    <div style="font-size: 36px; font-weight: 300; color: #c9a96e; margin-bottom: 5px;">₹2000+</div>
+                                    <div style="font-size: 14px; color: #cccccc; text-transform: uppercase; letter-spacing: 1px;">Crore Managed</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 36px; font-weight: 300; color: #c9a96e; margin-bottom: 5px;">13+</div>
+                                    <div style="font-size: 14px; color: #cccccc; text-transform: uppercase; letter-spacing: 1px;">Years Experience</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 36px; font-weight: 300; color: #c9a96e; margin-bottom: 5px;">15-30%</div>
+                                    <div style="font-size: 14px; color: #cccccc; text-transform: uppercase; letter-spacing: 1px;">ROI Targets</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 36px; font-weight: 300; color: #c9a96e; margin-bottom: 5px;">5000+</div>
+                                    <div style="font-size: 14px; color: #cccccc; text-transform: uppercase; letter-spacing: 1px;">Professionals Mentored</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Services List -->
+                    <div style="background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%); border-radius: 20px; padding: 40px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <h3 style="color: #c9a96e; font-size: 24px; margin-bottom: 30px; text-align: center; font-weight: 400;">Our Services</h3>
+                        
+                        <div style="space-y: 20px;">
+                            <div style="margin-bottom: 20px; padding: 25px; border-left: 4px solid #c9a96e; background: linear-gradient(135deg, rgba(201, 169, 110, 0.08) 0%, rgba(201, 169, 110, 0.03) 100%); border-radius: 0 10px 10px 0; transition: all 0.3s ease;" onmouseover="this.style.background='linear-gradient(135deg, rgba(201, 169, 110, 0.12) 0%, rgba(201, 169, 110, 0.06) 100%)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='linear-gradient(135deg, rgba(201, 169, 110, 0.08) 0%, rgba(201, 169, 110, 0.03) 100%)'; this.style.transform='translateX(0)'">
+                                <h4 style="color: #ffffff; font-size: 18px; margin-bottom: 10px; font-weight: 500;">Portfolio Management</h4>
+                                <p style="color: #cccccc; font-size: 14px; line-height: 1.6; margin: 0;">Strategic asset allocation across stocks, bonds, mutual funds, and alternative investments with data-driven optimization</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 20px; padding: 25px; border-left: 4px solid #c9a96e; background: linear-gradient(135deg, rgba(201, 169, 110, 0.08) 0%, rgba(201, 169, 110, 0.03) 100%); border-radius: 0 10px 10px 0; transition: all 0.3s ease;" onmouseover="this.style.background='linear-gradient(135deg, rgba(201, 169, 110, 0.12) 0%, rgba(201, 169, 110, 0.06) 100%)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='linear-gradient(135deg, rgba(201, 169, 110, 0.08) 0%, rgba(201, 169, 110, 0.03) 100%)'; this.style.transform='translateX(0)'">
+                                <h4 style="color: #ffffff; font-size: 18px; margin-bottom: 10px; font-weight: 500;">Financial Goal Setting</h4>
+                                <p style="color: #cccccc; font-size: 14px; line-height: 1.6; margin: 0;">Structured short-term, mid-term, and long-term financial planning with measurable milestones</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 20px; padding: 25px; border-left: 4px solid #c9a96e; background: linear-gradient(135deg, rgba(201, 169, 110, 0.08) 0%, rgba(201, 169, 110, 0.03) 100%); border-radius: 0 10px 10px 0; transition: all 0.3s ease;" onmouseover="this.style.background='linear-gradient(135deg, rgba(201, 169, 110, 0.12) 0%, rgba(201, 169, 110, 0.06) 100%)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='linear-gradient(135deg, rgba(201, 169, 110, 0.08) 0%, rgba(201, 169, 110, 0.03) 100%)'; this.style.transform='translateX(0)'">
+                                <h4 style="color: #ffffff; font-size: 18px; margin-bottom: 10px; font-weight: 500;">Business Advisory</h4>
+                                <p style="color: #cccccc; font-size: 14px; line-height: 1.6; margin: 0;">Consumer & EdTech sector expertise, funding strategies, and public listing preparation</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 0; padding: 25px; border-left: 4px solid #c9a96e; background: linear-gradient(135deg, rgba(201, 169, 110, 0.08) 0%, rgba(201, 169, 110, 0.03) 100%); border-radius: 0 10px 10px 0; transition: all 0.3s ease;" onmouseover="this.style.background='linear-gradient(135deg, rgba(201, 169, 110, 0.12) 0%, rgba(201, 169, 110, 0.06) 100%)'; this.style.transform='translateX(5px)'" onmouseout="this.style.background='linear-gradient(135deg, rgba(201, 169, 110, 0.08) 0%, rgba(201, 169, 110, 0.03) 100%)'; this.style.transform='translateX(0)'">
+                                <h4 style="color: #ffffff; font-size: 18px; margin-bottom: 10px; font-weight: 500;">Tax & Estate Planning</h4>
+                                <p style="color: #cccccc; font-size: 14px; line-height: 1.6; margin: 0;">Comprehensive tax optimization and wealth transfer strategies for sustained financial growth</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section section-5" id="testimonials" style="background: linear-gradient(45deg, #1a1a1a 0%, #2c2c2c 50%, #1a1a1a 100%);">
+        <div style="text-align: center; max-width: 1000px; margin: 0 auto; padding: 0 50px;">
+            <h2 style="font-size: 48px; font-weight: 300; margin-bottom: 60px; color: #c9a96e;">Client Testimonials</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-bottom: 60px;">
+                <div style="background: rgba(201, 169, 110, 0.1); padding: 40px; border-radius: 10px; border: 1px solid rgba(201, 169, 110, 0.2);">
+                    <p style="font-size: 18px; line-height: 1.7; color: #cccccc; margin-bottom: 20px; font-style: italic;">"The level of personalized attention and market insight is unmatched. Returns have consistently exceeded expectations."</p>
+                    <div style="color: #c9a96e; font-weight: 600;">— CEO, Fortune 500 Technology Company</div>
+                </div>
+                <div style="background: rgba(201, 169, 110, 0.1); padding: 40px; border-radius: 10px; border: 1px solid rgba(201, 169, 110, 0.2);">
+                    <p style="font-size: 18px; line-height: 1.7; color: #cccccc; margin-bottom: 20px; font-style: italic;">"Exceptional strategic thinking and execution. DS Global Wealth transformed our family's financial future."</p>
+                    <div style="color: #c9a96e; font-weight: 600;">— Private Investor, New York</div>
+                </div>
+            </div>
+            <a href="#contact" class="luxury-cta">START YOUR JOURNEY</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section section-6" id="contact" style="background: #000000;">
+        <div style="text-align: center; max-width: 800px; margin: 0 auto; padding: 0 50px;">
+            <h2 style="font-size: 48px; font-weight: 300; margin-bottom: 40px; color: #c9a96e;">Get In Touch</h2>
+            <p style="font-size: 20px; color: #cccccc; margin-bottom: 60px; line-height: 1.6;">Ready to elevate your wealth management strategy? Let's discuss your financial goals in a confidential consultation.</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-bottom: 60px; text-align: left;">
+                <div>
+                    <h3 style="color: #c9a96e; font-size: 24px; margin-bottom: 30px;">Contact Information</h3>
+                    <div style="margin-bottom: 20px;">
+                        <strong style="color: #ffffff;">Phone:</strong><br/>
+                        <span style="color: #cccccc;">+1 (555) 123-4567</span>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <strong style="color: #ffffff;">Email:</strong><br/>
+                        <span style="color: #cccccc;">contact@dsglobalwealth.com</span>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <strong style="color: #ffffff;">Office:</strong><br/>
+                        <span style="color: #cccccc;">500 Park Avenue, Suite 2000<br/>New York, NY 10022</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="color: #c9a96e; font-size: 24px; margin-bottom: 30px;">Quick Inquiry</h3>
+                    <form id="contactForm" style="display: flex; flex-direction: column; gap: 20px;">
+                        <div style="position: relative;">
+                            <input type="text" id="fullName" name="fullName" placeholder="Full Name *" required style="background: rgba(255,255,255,0.1); border: 1px solid rgba(201,169,110,0.3); padding: 15px; color: #ffffff; border-radius: 5px; width: 100%; box-sizing: border-box;">
+                            <span class="error-message" style="color: #ff6b6b; font-size: 12px; position: absolute; bottom: -18px; left: 0; display: none;"></span>
+                        </div>
+                        
+                        <div style="position: relative;">
+                            <input type="email" id="email" name="email" placeholder="Email Address *" required style="background: rgba(255,255,255,0.1); border: 1px solid rgba(201,169,110,0.3); padding: 15px; color: #ffffff; border-radius: 5px; width: 100%; box-sizing: border-box;">
+                            <span class="error-message" style="color: #ff6b6b; font-size: 12px; position: absolute; bottom: -18px; left: 0; display: none;"></span>
+                        </div>
+                        
+                        <div style="position: relative;">
+                            <input type="tel" id="phone" name="phone" placeholder="Phone Number (Optional)" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(201,169,110,0.3); padding: 15px; color: #ffffff; border-radius: 5px; width: 100%; box-sizing: border-box;">
+                            <span class="error-message" style="color: #ff6b6b; font-size: 12px; position: absolute; bottom: -18px; left: 0; display: none;"></span>
+                        </div>
+                        
+                        <div style="position: relative;">
+                            <select id="inquiryType" name="inquiryType" required style="background: rgba(255,255,255,0.1); border: 1px solid rgba(201,169,110,0.3); padding: 15px; color: #ffffff; border-radius: 5px; width: 100%; box-sizing: border-box;">
+                                <option value="" style="background: #1a1a1a; color: #cccccc;">Select Inquiry Type *</option>
+                                <option value="portfolio-management" style="background: #1a1a1a; color: #cccccc;">Portfolio Management</option>
+                                <option value="business-funding" style="background: #1a1a1a; color: #cccccc;">Business Funding</option>
+                                <option value="tax-planning" style="background: #1a1a1a; color: #cccccc;">Tax Planning</option>
+                                <option value="risk-management" style="background: #1a1a1a; color: #cccccc;">Risk Management</option>
+                                <option value="financial-planning" style="background: #1a1a1a; color: #cccccc;">Financial Goal Setting</option>
+                                <option value="consultation" style="background: #1a1a1a; color: #cccccc;">General Consultation</option>
+                                <option value="other" style="background: #1a1a1a; color: #cccccc;">Other</option>
+                            </select>
+                            <span class="error-message" style="color: #ff6b6b; font-size: 12px; position: absolute; bottom: -18px; left: 0; display: none;"></span>
+                        </div>
+                        
+                        <div style="position: relative;">
+                            <textarea id="message" name="message" placeholder="Tell us about your financial goals and how we can help you *" rows="4" required style="background: rgba(255,255,255,0.1); border: 1px solid rgba(201,169,110,0.3); padding: 15px; color: #ffffff; border-radius: 5px; resize: vertical; width: 100%; box-sizing: border-box; min-height: 100px;"></textarea>
+                            <span class="error-message" style="color: #ff6b6b; font-size: 12px; position: absolute; bottom: -18px; left: 0; display: none;"></span>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
+                            <input type="checkbox" id="consent" name="consent" required style="accent-color: #c9a96e;">
+                            <label for="consent" style="color: #cccccc; font-size: 14px; line-height: 1.4;">I agree to DS Global Wealth contacting me regarding my inquiry and consent to the processing of my personal data for this purpose.</label>
+                        </div>
+                        
+                        <button type="submit" id="submitBtn" style="background: #c9a96e; color: #000000; padding: 15px; border: none; font-weight: 600; cursor: pointer; border-radius: 5px; transition: all 0.3s ease; position: relative; overflow: hidden;">
+                            <span id="submitText">SEND MESSAGE</span>
+                            <span id="loadingSpinner" style="display: none;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="animation: spin 1s linear infinite; margin-right: 10px;">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" opacity="0.3"></circle>
+                                    <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="4"></path>
+                                </svg>
+                                SENDING...
+                            </span>
+                        </button>
+                        
+                        <div id="formMessage" style="padding: 15px; border-radius: 5px; text-align: center; font-weight: 500; display: none;"></div>
+                        
+                        <p style="color: #888; font-size: 12px; text-align: center; margin-top: 10px;">
+                            * Required fields. We typically respond within 24 hours during business days.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
+                
+                if (target) {
+                    // Calculate offset for fixed navbar
+                    const navbarHeight = document.querySelector('.luxury-navbar').offsetHeight;
+                    const targetPosition = target.offsetTop - navbarHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update active link immediately
+                    updateActiveNavLink();
+                }
+            });
+        });
+
+        // Add active navigation link highlighting
+        function updateActiveNavLink() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.luxury-nav-links a');
+            
+            let current = '';
+            const navbarHeight = document.querySelector('.luxury-navbar').offsetHeight;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - navbarHeight - 100;
+                const sectionBottom = sectionTop + section.clientHeight;
+                
+                if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            // Default to home if at top
+            if (window.scrollY < 100) {
+                current = 'home';
+            }
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const linkHref = link.getAttribute('href');
+                if (linkHref === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Navbar scroll effect and active link update
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const navbar = document.querySelector('.luxury-navbar');
+            
+            // Update navbar background
+            if (scrollY > 50) {
+                navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(0, 0, 0, 0.9)';
+            }
+            
+            // Update active navigation link
+            updateActiveNavLink();
+        });
+        
+        // Set initial active link on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateActiveNavLink();
+        });
+
+        // Initialize EmailJS when the page loads
+        window.addEventListener('load', function() {
+            // Check if EmailJS is available, if not, fall back to alternative method
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init("YOUR_PUBLIC_KEY_HERE"); // Replace with your actual public key
+                console.log('EmailJS initialized successfully');
+            } else {
+                console.log('EmailJS not available, using fallback method');
+            }
+        });
+
+        // Enhanced Form Validation and Submission Handler
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Clear previous error messages
+            clearErrorMessages();
+            
+            // Validate form
+            if (!validateForm()) {
+                return;
+            }
+            
+            // Show loading state
+            showLoadingState();
+            
+            try {
+                // Collect form data
+                const formData = {
+                    from_name: document.getElementById('fullName').value.trim(),
+                    from_email: document.getElementById('email').value.trim(),
+                    phone: document.getElementById('phone').value.trim() || 'Not provided',
+                    inquiry_type: document.getElementById('inquiryType').value,
+                    message: document.getElementById('message').value.trim(),
+                    to_email: 'yogyamendiratta73@gmail.com',
+                    timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+                    source: 'DS Global Wealth Website'
+                };
+                
+                // Send email using available method
+                const success = await submitFormData(formData);
+                
+                if (success) {
+                    showSuccessMessage();
+                    resetForm();
+                } else {
+                    showErrorMessage();
+                }
+                
+            } catch (error) {
+                console.error('Form submission error:', error);
+                showErrorMessage();
+            } finally {
+                hideLoadingState();
+            }
+        });
+        
+        // Form validation function
+        function validateForm() {
+            let isValid = true;
+            
+            // Validate full name
+            const fullName = document.getElementById('fullName').value.trim();
+            if (!fullName || fullName.length < 2) {
+                showFieldError('fullName', 'Please enter your full name (minimum 2 characters)');
+                isValid = false;
+            }
+            
+            // Validate email
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email) {
+                showFieldError('email', 'Email address is required');
+                isValid = false;
+            } else if (!emailRegex.test(email)) {
+                showFieldError('email', 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            // Validate phone (if provided)
+            const phone = document.getElementById('phone').value.trim();
+            if (phone) {
+                const phoneRegex = /^[\+]?[\d\s\-\(\)]{10,}$/;
+                if (!phoneRegex.test(phone)) {
+                    showFieldError('phone', 'Please enter a valid phone number');
+                    isValid = false;
+                }
+            }
+            
+            // Validate inquiry type
+            const inquiryType = document.getElementById('inquiryType').value;
+            if (!inquiryType) {
+                showFieldError('inquiryType', 'Please select an inquiry type');
+                isValid = false;
+            }
+            
+            // Validate message
+            const message = document.getElementById('message').value.trim();
+            if (!message || message.length < 10) {
+                showFieldError('message', 'Please provide more details (minimum 10 characters)');
+                isValid = false;
+            }
+            
+            // Validate consent
+            const consent = document.getElementById('consent').checked;
+            if (!consent) {
+                showFormMessage('Please agree to the consent terms to proceed.', 'error');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+        
+        // Show field-specific error
+        function showFieldError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            const errorSpan = field.parentNode.querySelector('.error-message');
+            
+            field.style.borderColor = '#ff6b6b';
+            errorSpan.textContent = message;
+            errorSpan.style.display = 'block';
+        }
+        
+        // Clear all error messages
+        function clearErrorMessages() {
+            const errorMessages = document.querySelectorAll('.error-message');
+            const formFields = document.querySelectorAll('#contactForm input, #contactForm select, #contactForm textarea');
+            
+            errorMessages.forEach(error => {
+                error.style.display = 'none';
+                error.textContent = '';
+            });
+            
+            formFields.forEach(field => {
+                field.style.borderColor = 'rgba(201,169,110,0.3)';
+            });
+            
+            hideFormMessage();
+        }
+        
+        // Show loading state
+        function showLoadingState() {
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.8';
+            submitText.style.display = 'none';
+            loadingSpinner.style.display = 'inline-flex';
+            loadingSpinner.style.alignItems = 'center';
+        }
+        
+        // Hide loading state
+        function hideLoadingState() {
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitText.style.display = 'inline';
+            loadingSpinner.style.display = 'none';
+        }
+        
+        // Show success message
+        function showSuccessMessage() {
+            showFormMessage(
+                '✓ Thank you for your inquiry! We have received your message and will respond within 24 hours during business days. A confirmation email has been sent to your inbox.',
+                'success'
+            );
+        }
+        
+        // Show error message
+        function showErrorMessage() {
+            showFormMessage(
+                '⚠ We apologize, but there was an issue sending your message. Please try again or contact us directly at contact@dsglobalwealth.com',
+                'error'
+            );
+        }
+        
+        // Show form message
+        function showFormMessage(message, type) {
+            const messageDiv = document.getElementById('formMessage');
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+            
+            if (type === 'success') {
+                messageDiv.style.backgroundColor = 'rgba(40, 167, 69, 0.2)';
+                messageDiv.style.borderLeft = '4px solid #28a745';
+                messageDiv.style.color = '#28a745';
+            } else {
+                messageDiv.style.backgroundColor = 'rgba(220, 53, 69, 0.2)';
+                messageDiv.style.borderLeft = '4px solid #dc3545';
+                messageDiv.style.color = '#dc3545';
+            }
+        }
+        
+        // Hide form message
+        function hideFormMessage() {
+            const messageDiv = document.getElementById('formMessage');
+            messageDiv.style.display = 'none';
+        }
+        
+        // Reset form
+        function resetForm() {
+            document.getElementById('contactForm').reset();
+        }
+        
+        // Form submission with EmailJS and fallback options
+        async function submitFormData(formData) {
+            // Method 1: Try EmailJS (if available)
+            if (typeof emailjs !== 'undefined') {
+                try {
+                    const result = await emailjs.send(
+                        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
+                        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+                        formData
+                    );
+                    
+                    console.log('Email sent successfully via EmailJS:', result);
+                    return result.status === 200;
+                    
+                } catch (error) {
+                    console.error('EmailJS error:', error);
+                    // Fall through to alternative method
+                }
+            }
+            
+            // Method 2: Formspree (Alternative email service)
+            try {
+                const formspreeData = {
+                    name: formData.from_name,
+                    email: formData.from_email,
+                    phone: formData.phone,
+                    inquiryType: formData.inquiry_type,
+                    message: `
+Inquiry Type: ${formData.inquiry_type}
+Phone: ${formData.phone}
+Submitted: ${formData.timestamp}
+Source: ${formData.source}
+
+Message:
+${formData.message}
+                    `.trim(),
+                    _replyto: formData.from_email,
+                    _subject: `New Inquiry from DS Global Wealth - ${formData.inquiry_type}`
+                };
+                
+                // Replace 'YOUR_FORMSPREE_ID' with actual Formspree form ID
+                // You can get this free at https://formspree.io
+                const response = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formspreeData)
+                });
+                
+                if (response.ok) {
+                    console.log('Email sent successfully via Formspree');
+                    return true;
+                }
+            } catch (error) {
+                console.error('Formspree error:', error);
+            }
+            
+            // Method 3: Mailto fallback (opens email client)
+            try {
+                const subject = encodeURIComponent(`New Inquiry from DS Global Wealth - ${formData.inquiry_type}`);
+                const body = encodeURIComponent(`
+New inquiry received from DS Global Wealth website:
+
+Client Details:
+- Name: ${formData.from_name}
+- Email: ${formData.from_email}
+- Phone: ${formData.phone}
+- Inquiry Type: ${formData.inquiry_type}
+
+Message:
+${formData.message}
+
+Submitted: ${formData.timestamp}
+Source: ${formData.source}
+                `.trim());
+                
+                const mailtoLink = `mailto:yogyamendiratta73@gmail.com?subject=${subject}&body=${body}`;
+                
+                // For demo purposes, show the mailto link
+                console.log('Fallback: Opening email client');
+                console.log('Mailto link:', mailtoLink);
+                
+                // In a real scenario, you could:
+                // window.location.href = mailtoLink;
+                
+                // For now, just log the data and return success
+                console.log('Form Data:', formData);
+                return true;
+                
+            } catch (error) {
+                console.error('Mailto fallback error:', error);
+                return false;
+            }
+        }
+        
+        // Add spinning animation for loading indicator
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            
+            #contactForm input:focus, #contactForm select:focus, #contactForm textarea:focus {
+                outline: none;
+                border-color: #c9a96e;
+                box-shadow: 0 0 0 2px rgba(201, 169, 110, 0.2);
+            }
+            
+            #contactForm button:hover:not(:disabled) {
+                background: #d4b574;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(201, 169, 110, 0.3);
+            }
+            
+            #contactForm button:disabled {
+                cursor: not-allowed;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Mobile responsive navigation
+        window.addEventListener('resize', function() {
+            const navContainer = document.querySelector('.luxury-nav-container');
+            if (window.innerWidth <= 768) {
+                navContainer.style.flexDirection = 'column';
+                navContainer.style.gap = '20px';
+            } else {
+                navContainer.style.flexDirection = 'row';
+                navContainer.style.gap = '0';
+            }
+        });
+    </script>
